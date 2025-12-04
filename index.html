@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DealFlow AI - Due Diligence in 60 Seconds</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    analyzing: false,
+                    showReport: false,
+                    fileName: ''
+                };
+            },
+            methods: {
+                async analyzeReddit() {
+                    this.analyzing = true;
+                    this.fileName = "reddit-series-b-deck.pdf";
+                    await new Promise(resolve => setTimeout(resolve, 3500));
+                    this.analyzing = false;
+                    this.showReport = true;
+                },
+                handleFileUpload(event) {
+                    if (event.target.files[0]) {
+                        this.analyzeReddit();
+                    }
+                },
+                resetDemo() {
+                    this.showReport = false;
+                    this.fileName = '';
+                }
+            },
+            template: `
+                <div v-if="!showReport" class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-slate-50 flex items-center justify-center p-6">
+                    <div class="max-w-2xl w-full">
+                        <div class="text-center mb-8">
+                            <div class="inline-flex items-center justify-center w-16 h-16 bg-blue-600 rounded-2xl mb-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+                                    <polyline points="16 7 22 7 22 13"></polyline>
+                                </svg>
+                            </div>
+                            <h1 class="text-4xl font-bold text-slate-900 mb-2">DealFlow AI</h1>
+                            <p class="text-lg text-slate-600">AI-powered due diligence in under 60 seconds</p>
+                        </div>
+
+                        <div class="bg-white rounded-2xl shadow-xl border border-slate-200 p-8">
+                            <div v-if="!analyzing">
+                                <div class="border-2 border-dashed border-slate-300 rounded-xl p-12 text-center hover:border-blue-400 hover:bg-blue-50/50 transition-all cursor-pointer">
+                                    <input type="file" id="fileUpload" class="hidden" accept=".pdf,.pptx,.xlsx,.csv" @change="handleFileUpload">
+                                    <label for="fileUpload" class="cursor-pointer">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-slate-400 mx-auto mb-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                            <polyline points="17 8 12 3 7 8"></polyline>
+                                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                                        </svg>
+                                        <div class="text-lg font-semibold text-slate-900 mb-2">Upload pitch deck or financial model</div>
+                                        <div class="text-sm text-slate-500 mb-4">PDF, PPTX, XLSX, or CSV • Max 50MB</div>
+                                        <div class="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors">
+                                            Choose File
+                                        </div>
+                                    </label>
+                                </div>
+
+                                <div class="mt-6 text-center">
+                                    <div class="text-sm text-slate-500 mb-3">Or try a demo analysis</div>
+                                    <button @click="analyzeReddit" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-lg font-medium hover:from-orange-600 hover:to-red-600 transition-all shadow-lg hover:shadow-xl">
+                                        ⚡ Analyze Reddit Series B (2014)
+                                    </button>
+                                </div>
+
+                                <div class="mt-6 grid grid-cols-3 gap-4 text-center">
+                                    <div class="p-4 bg-slate-50 rounded-lg">
+                                        <div class="text-2xl font-bold text-slate-900 mb-1">52s</div>
+                                        <div class="text-xs text-slate-600">Average analysis time</div>
+                                    </div>
+                                    <div class="p-4 bg-slate-50 rounded-lg">
+                                        <div class="text-2xl font-bold text-slate-900 mb-1">92%</div>
+                                        <div class="text-xs text-slate-600">Accuracy vs manual DD</div>
+                                    </div>
+                                    <div class="p-4 bg-slate-50 rounded-lg">
+                                        <div class="text-2xl font-bold text-slate-900 mb-1">3-5hr</div>
+                                        <div class="text-xs text-slate-600">Time saved per deal</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div v-else class="py-12 text-center">
+                                <div class="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
+                                <div class="text-xl font-semibold text-slate-900 mb-2">Analyzing {{ fileName }}...</div>
+                                <div class="text-slate-600 mb-6">This usually takes 30-60 seconds</div>
+                                <div class="max-w-md mx-auto space-y-3 text-left">
+                                    <div class="flex items-center gap-3 text-sm text-slate-600">
+                                        <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                                        Extracting financial data and key metrics
+                                    </div>
+                                    <div class="flex items-center gap-3 text-sm text-slate-600">
+                                        <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                                        Running valuation models and comparables analysis
+                                    </div>
+                                    <div class="flex items-center gap-3 text-sm text-slate-600">
+                                        <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                                        Identifying risks and red flags
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 text-center text-sm text-slate-500">Demo mode • YC W26 Application</div>
+                    </div>
+                </div>
+
+                <div v-else class="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
+                    <div class="bg-white border-b border-slate-200 px-6 py-4">
+                        <div class="max-w-6xl mx-auto flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+                                        <polyline points="16 7 22 7 22 13"></polyline>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h1 class="text-xl font-bold text-slate-900">DealFlow AI</h1>
+                                    <p class="text-sm text-slate-500">Due Diligence Report</p>
+                                </div>
+                            </div>
+                            <button @click="resetDemo" class="px-4 py-2 text-sm font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors">
+                                Analyze Another Deck
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="max-w-6xl mx-auto px-6 py-8">
+                        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 mb-6">
+                            <div class="flex items-start justify-between mb-4">
+                                <div>
+                                    <h2 class="text-2xl font-bold text-slate-900 mb-1">Reddit Inc.</h2>
+                                    <p class="text-slate-600 mb-3">The front page of the internet - community-driven content platform</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm font-medium">Series B</span>
+                                        <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-sm">Seeking $50M</span>
+                                        <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-sm">$8.3M ARR</span>
+                                        <span class="px-3 py-1 bg-green-50 text-green-700 rounded-full text-sm font-medium">40% YoY growth</span>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-2xl font-bold text-green-600 mb-1">STRONG YES</div>
+                                    <div class="text-sm text-slate-500">Confidence: 85%</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            <div class="lg:col-span-2 space-y-6">
+                                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                                    <h3 class="text-lg font-bold text-slate-900 mb-4">💰 Valuation Analysis</h3>
+                                    <div class="bg-blue-50 rounded-lg p-4 mb-4">
+                                        <div class="text-sm text-blue-700 mb-1">Estimated Range</div>
+                                        <div class="text-2xl font-bold text-blue-900">$400M - $550M</div>
+                                        <div class="text-sm text-blue-600 mt-2">User-based valuation (MAU multiples) + comparable social platforms</div>
+                                    </div>
+                                    <div class="text-sm font-medium text-slate-700 mb-2">Comparable Companies</div>
+                                    <div class="space-y-2">
+                                        <div class="flex justify-between py-2 border-b border-slate-100">
+                                            <span class="text-slate-700">Twitter (Series B 2009)</span>
+                                            <span class="text-slate-900 font-medium">$8-10 per MAU</span>
+                                        </div>
+                                        <div class="flex justify-between py-2 border-b border-slate-100">
+                                            <span class="text-slate-700">Pinterest (Series B 2011)</span>
+                                            <span class="text-slate-900 font-medium">$12 per MAU</span>
+                                        </div>
+                                        <div class="flex justify-between py-2">
+                                            <span class="text-slate-700">Tumblr (Series B 2010)</span>
+                                            <span class="text-slate-900 font-medium">$6-8 per MAU</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                                    <h3 class="text-lg font-bold text-slate-900 mb-4">📊 Key Metrics</h3>
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <div class="border border-slate-200 rounded-lg p-4">
+                                            <div class="flex items-center justify-between mb-1">
+                                                <div class="text-sm font-medium text-slate-600">MAU</div>
+                                                <span class="text-green-600">✓</span>
+                                            </div>
+                                            <div class="text-xl font-bold text-slate-900 mb-1">56M</div>
+                                            <div class="text-xs text-slate-500">20M+ strong</div>
+                                        </div>
+                                        <div class="border border-slate-200 rounded-lg p-4">
+                                            <div class="flex items-center justify-between mb-1">
+                                                <div class="text-sm font-medium text-slate-600">Engagement</div>
+                                                <span class="text-green-600">✓</span>
+                                            </div>
+                                            <div class="text-xl font-bold text-slate-900 mb-1">18 min/day</div>
+                                            <div class="text-xs text-slate-500">10 min target</div>
+                                        </div>
+                                        <div class="border border-slate-200 rounded-lg p-4">
+                                            <div class="flex items-center justify-between mb-1">
+                                                <div class="text-sm font-medium text-slate-600">ARPU</div>
+                                                <span class="text-yellow-600">⚠</span>
+                                            </div>
+                                            <div class="text-xl font-bold text-slate-900 mb-1">$0.15</div>
+                                            <div class="text-xs text-slate-500">$0.20 avg</div>
+                                        </div>
+                                        <div class="border border-slate-200 rounded-lg p-4">
+                                            <div class="flex items-center justify-between mb-1">
+                                                <div class="text-sm font-medium text-slate-600">Gross Margin</div>
+                                                <span class="text-blue-600">✓</span>
+                                            </div>
+                                            <div class="text-xl font-bold text-slate-900 mb-1">65%</div>
+                                            <div class="text-xs text-slate-500">60%+ target</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                                    <h3 class="text-lg font-bold text-slate-900 mb-4">✨ Key Strengths</h3>
+                                    <div class="space-y-2">
+                                        <div class="flex items-start gap-3 p-3 bg-green-50 rounded-lg">
+                                            <div class="w-1.5 h-1.5 bg-green-600 rounded-full mt-2"></div>
+                                            <span class="text-sm text-slate-700">Exceptional engagement: 18 min/day beats industry average (8-12 min)</span>
+                                        </div>
+                                        <div class="flex items-start gap-3 p-3 bg-green-50 rounded-lg">
+                                            <div class="w-1.5 h-1.5 bg-green-600 rounded-full mt-2"></div>
+                                            <span class="text-sm text-slate-700">Organic growth: 56M MAU with minimal marketing spend</span>
+                                        </div>
+                                        <div class="flex items-start gap-3 p-3 bg-green-50 rounded-lg">
+                                            <div class="w-1.5 h-1.5 bg-green-600 rounded-full mt-2"></div>
+                                            <span class="text-sm text-slate-700">Unique moat: subreddit structure creates network effects at community level</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="space-y-6">
+                                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                                    <h3 class="text-lg font-bold text-slate-900 mb-4">⚠️ Risk Flags</h3>
+                                    <div class="space-y-3">
+                                        <div class="border-l-4 border-red-400 bg-red-50 rounded-r-lg p-3">
+                                            <div class="text-xs font-bold uppercase text-red-600 mb-1">HIGH RISK</div>
+                                            <div class="text-sm font-medium text-slate-900 mb-1">Monetization Lagging Growth</div>
+                                            <div class="text-xs text-slate-600">56M MAU but only $8.3M revenue. ARPU of $0.15 is significantly below Twitter ($1.20)</div>
+                                        </div>
+                                        <div class="border-l-4 border-yellow-400 bg-yellow-50 rounded-r-lg p-3">
+                                            <div class="text-xs font-bold uppercase text-yellow-700 mb-1">MEDIUM RISK</div>
+                                            <div class="text-sm font-medium text-slate-900 mb-1">Content Moderation</div>
+                                            <div class="text-xs text-slate-600">User-generated content at scale presents ongoing moderation challenges</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                                    <h3 class="text-lg font-bold text-slate-900 mb-4">👥 Team Assessment</h3>
+                                    <div class="bg-blue-50 rounded-lg p-3 mb-3">
+                                        <div class="text-sm text-blue-700 mb-1">Team Score</div>
+                                        <div class="text-2xl font-bold text-blue-900">7.5/10</div>
+                                    </div>
+                                    <div class="text-xs text-slate-600 space-y-2">
+                                        <p>✓ Strong technical founders</p>
+                                        <p>✓ Community-first culture</p>
+                                        <p>⚠ Recent CEO transition</p>
+                                    </div>
+                                </div>
+
+                                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                                    <h3 class="text-lg font-bold text-slate-900 mb-4">📋 Next Steps</h3>
+                                    <div class="space-y-3">
+                                        <div class="flex items-start gap-3">
+                                            <div class="w-6 h-6 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-sm font-bold">1</div>
+                                            <span class="text-sm text-slate-700 pt-0.5">Schedule deep dive with CEO on monetization roadmap</span>
+                                        </div>
+                                        <div class="flex items-start gap-3">
+                                            <div class="w-6 h-6 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-sm font-bold">2</div>
+                                            <span class="text-sm text-slate-700 pt-0.5">Request detailed unit economics breakdown</span>
+                                        </div>
+                                        <div class="flex items-start gap-3">
+                                            <div class="w-6 h-6 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-sm font-bold">3</div>
+                                            <span class="text-sm text-slate-700 pt-0.5">Conduct user cohort analysis</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 text-center">
+                            <div class="inline-flex items-center gap-2 px-4 py-2 bg-green-50 text-green-700 rounded-full text-sm font-medium">
+                                ⏱️ Analysis completed in 52 seconds
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `
+        }).mount('#app');
+    </script>
+</body>
+</html>
